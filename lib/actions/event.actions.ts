@@ -22,6 +22,7 @@ const getCategoryByName = async (name: string) => {
 }
 
 const populateEvent = (query: any) => {
+  
   return query
     .populate({ path: 'organizer', model: User, select: '_id firstName lastName' })
     .populate({ path: 'category', model: Category, select: '_id name' })
@@ -31,7 +32,7 @@ const populateEvent = (query: any) => {
 export async function createEvent({ userId, event, path }: CreateEventParams) {
   try {
     await connectToDatabase()
-
+    
     const organizer = await User.findById(userId)
     if (!organizer) throw new Error('Organizer not found')
 
